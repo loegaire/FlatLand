@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.List;;
 
 public class Bullet {
-    int x,y,size,speed=100,dmg = 10;
+    int x,y,size,speed=1,dmg = 10;
     boolean dead = false;
     double[] direction = new double[]{0,0};
     public Bullet(int x, int y,int size, double[] direction){
@@ -22,7 +22,7 @@ public class Bullet {
     }
     public void move(){
         x += direction[0]*speed;
-        y += direction[0]*speed;
+        y += direction[1]*speed;
     }
     public void update(List<Obstacle> obstacles, List<Enemy> enemies){
         move();

@@ -16,14 +16,14 @@ public class Player {
         this.y = y;
     }
     public void Attack(Enemy enemy, Point mousePos){
-        int dx = x - mousePos.x; int dy = y - mousePos.y;
+        int dx = x - mousePos.x + 30; int dy = y - mousePos.y + 30;
         double length = Math.sqrt(dx*dx + dy*dy);
         if(length == 0){
             length = 1;
         }
         direction[0]=dx/length;
         direction[1]=dy/length;
-        Rectangle attack = new Rectangle(x + (int)(direction[0]*(-range)),y + (int)(direction[1]*(-range)),range,range);
+        Rectangle attack = new Rectangle(x -9 + (int)(direction[0]*(-range)),y -9 + (int)(direction[1]*(-range)),range,range);
         long now = System.currentTimeMillis();
             if (now - LastAttackTime < AttackCooldown) {
             return; // too soon to attack
@@ -38,6 +38,7 @@ public class Player {
         g.setColor(Color.GREEN);
         g.fillOval(x, y, size, size);
         g.setColor(new Color(0,255,0)); 
+        g.setColor(Color.BLACK);
         g.fillRect(LastAttack.x, LastAttack.y, LastAttack.width, LastAttack.height);
     }
     public void move(int dx, int dy, List<Obstacle> obstacles, List<Enemy> enemies){

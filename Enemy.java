@@ -37,7 +37,7 @@ public class Enemy {
     public Rectangle getBounds(){
         return new Rectangle((int)(x + size*0.1),(int)(y + size*0.1),(int)(size - size*0.2),(int)(size - size*0.2));
     }
-    private void move(Player player, List<Obstacle> obstacles ){
+    public void move(Player player, List<Obstacle> obstacles ){
         long now = System.currentTimeMillis();
         int enemyX = x, enemyY = y;
         if(now - patrolChangedDirection > patrolCooldown){

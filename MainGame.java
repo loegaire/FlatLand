@@ -67,8 +67,11 @@ class GamePanel extends JPanel {
                 if (pressedKeys.contains(KeyEvent.VK_A)) playerDx -= 1;
                 if (pressedKeys.contains(KeyEvent.VK_D)) playerDx += 1;
                 player.move(playerDx, playerDy, obstacles, enemies);
+                for (Bullet bu : bullets){
+                    bu.update(obstacles, enemies);
+                }
                 for (Enemy ene : enemies){
-                    ene.update(player, obstacles,bullets);
+                    ene.update(player,obstacles,bullets);
                 }
                 enemies.removeIf(enemy -> enemy.dead);
                 if (player.health <= 0){
