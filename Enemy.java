@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Enemy {
-    int x,y,size,sight = 400, speed = 1,range = 20,dmg = 10,health = 100;
+    int x,y,size,sight = 300, speed = 1,range = 20,dmg = 10,health = 100;
     double[] direction = new double[]{0,0};
     private long LastAttackTime = 0;
     private long AttackCooldown = 1000;
