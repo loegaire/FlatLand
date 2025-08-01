@@ -83,13 +83,13 @@ public class Enemy {
             dead = true;    
         }
     }
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int cameraX, int cameraY) {
         if (dead){
             return;
         }
         g.setColor(Color.RED);
-        g.fillOval(x, y, size, size);
+        g.fillOval(x - cameraX, y - cameraY, size, size);
         g.setColor(new Color(255, 255, 0, 200)); 
-        g.fillRect(LastAttack.x, LastAttack.y, LastAttack.width, LastAttack.height);
+        g.fillRect(LastAttack.x - cameraX, LastAttack.y - cameraY, LastAttack.width, LastAttack.height);
     }
 }

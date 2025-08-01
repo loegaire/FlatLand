@@ -6,8 +6,8 @@ public class Bullet {
     boolean dead = false;
     double[] direction = new double[]{0,0};
     public Bullet(int x, int y,int size, double[] direction){
-        this.x = x;
-        this.y = y;
+        this.x = x ;
+        this.y = y ;
         this.size = size;
         this.direction[0] = direction[0];
         this.direction[1] = direction[1];
@@ -33,15 +33,22 @@ public class Bullet {
         x += direction[0]*speed;
         y += direction[1]*speed;
     }
+    // khong can dung cai nay dau
     public void update(Player player,List<Obstacle> obstacles, List<Enemy> enemies){
+        if (dead){
+            return;
+        }
         move();
         Attack(player,obstacles, enemies);
     }
     public Rectangle getBounds(){
         return new Rectangle(x,y,size,size);
     }
-    public void draw(Graphics g){
-        g.setColor(Color.PINK);
-        g.fillRect(x , y, size, size);
+    public void draw(Graphics g, int cameraX, int cameraY){
+        if (dead){
+            return;
+        }
+        g.setColor(Color.BLUE);
+        g.fillRect(x - cameraX , y - cameraY, size, size);
     }
 }

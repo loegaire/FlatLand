@@ -20,7 +20,8 @@ class GamePanel extends JPanel {
     private List<Obstacle> obstacles = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
     private List<Bullet> bullets = new ArrayList<>();
-
+    private int cameraX = 0;
+    private int cameraY = 0;
     private boolean GameOver = false;
     private Point mousePos = new Point(0, 0);
     private final Set<Integer> pressedKeys = new HashSet<>();
@@ -49,13 +50,20 @@ class GamePanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseMoved(MouseEvent e) {
                 mousePos = e.getPoint();
+                mousePos.x += cameraX; // adjust for camera position
+                mousePos.y += cameraY; // adjust for camera position
             }
         });
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                for (Enemy ene : enemies) {
-                    player.Attack(ene, mousePos);
-                }
+                    player.Attack(bullets,enemies, mousePos);
+            }
+        });
+        addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                int notches = e.getWheelRotation(); // positive = scroll down, negative = scroll up
+                player.changeWeapon(notches);
             }
         });
         // This is the game loop: it runs every 16ms (~60 FPS)
@@ -70,6 +78,7 @@ class GamePanel extends JPanel {
                 for (Bullet bu : bullets){
                     bu.update(player,obstacles, enemies);
                 }
+                bullets.removeIf(bu -> bu.dead);
                 for (Enemy ene : enemies){
                     ene.update(player,obstacles,bullets);
                 }
@@ -77,6 +86,9 @@ class GamePanel extends JPanel {
                 if (player.health <= 0){
                     GameOver = true;
                 }
+               
+                cameraX = player.x - getWidth() / 2 + player.size / 2;
+                cameraY = player.y - getHeight() / 2 + player.size / 2;
                 repaint();
             }
         });
@@ -86,15 +98,15 @@ class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        player.draw(g);
+        player.draw(g, cameraX, cameraY, getWidth(),getHeight());
         for (Bullet bu : bullets){
-            bu.draw(g);
+            bu.draw(g, cameraX, cameraY);
         }
         for (Obstacle ob : obstacles) {
-            ob.draw(g);
+            ob.draw(g,cameraX, cameraY);
         }
         for (Enemy ene : enemies){
-            ene.draw(g);
+            ene.draw(g, cameraX, cameraY);
         }
         if (GameOver){
             g.setFont(new Font("Arial", Font.BOLD, 48));
