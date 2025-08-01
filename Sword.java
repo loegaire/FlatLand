@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.List;
 
-public class Sword implements Weapon {
+public class Sword implements Items {
     public Rectangle LastAttack_for_Drawing = new Rectangle();
     private int LastAttackTime = 0;
     private int AttackCooldown = 500;

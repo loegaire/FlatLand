@@ -1,7 +1,7 @@
 import java.util.List;
 import java.awt.*;
 
-public class Gun implements Weapon{
+public class Gun implements Items{
     private int LastAttackTime = 0;
     private int dmg = 10;
     private int range = 100;

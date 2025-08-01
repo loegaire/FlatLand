@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 public class Player {
-    List<Weapon> weapons = new ArrayList<>();
+    List<Items> items = new ArrayList<>();
     private Image sprite;
     int currentWeaponIndex = 1;
     int x,y;
@@ -16,8 +16,9 @@ public class Player {
     int range = 50;
     int dmg = 20;
     public Player(int x, int y) {
-        weapons.add(new Sword()); 
-        weapons.add(new Gun());
+        items.add(new Sword()); 
+        items.add(new Gun());
+        items.add(new Potions(this));
         this.x = x;
         this.y = y;
         sprite = new ImageIcon("assets/player.png").getImage();
@@ -31,7 +32,7 @@ public class Player {
         direction[0]=dx/length;
         direction[1]=dy/length;
         //dung vu khi:p 
-        weapons.get(currentWeaponIndex).use(x, y, enemies,bullets, direction);        
+        items.get(currentWeaponIndex).use(x, y, enemies,bullets, direction);        
     }
 
     public void draw(Graphics g, int cameraX, int cameraY, int ScreenWidth, int ScreenHeight) {
@@ -39,7 +40,7 @@ public class Player {
         g.fillOval(x - cameraX, y - cameraY, size, size);
         //g.drawImage(sprite, x-cameraX, y-cameraY,size,size, null);
         g.setColor(new Color(0,255,0)); 
-        weapons.get(currentWeaponIndex).draw(g, cameraX, cameraY, ScreenWidth, ScreenHeight);
+        items.get(currentWeaponIndex).draw(g, cameraX, cameraY, ScreenWidth, ScreenHeight);
         g.setColor(Color.BLACK);
         g.fillRect(x - cameraX - 10, y + ScreenHeight/20 - cameraY, 50, 4);
         g.setColor(Color.RED);
@@ -66,9 +67,9 @@ public class Player {
     }
     public void changeWeapon(int notches){
         if(notches > 0) {
-            currentWeaponIndex = (currentWeaponIndex + 1) % weapons.size();
+            currentWeaponIndex = (currentWeaponIndex + 1) % items.size();
         } else if (notches < 0) {
-            currentWeaponIndex = (currentWeaponIndex - 1 + weapons.size()) % weapons.size();
+            currentWeaponIndex = (currentWeaponIndex - 1 + items.size()) % items.size();
         }
     }
     public Rectangle getBounds(){
