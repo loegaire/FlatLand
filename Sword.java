@@ -47,10 +47,7 @@ public class Sword implements Items {
         int fillWidth = Math.min(Math.max(elapsed / 10, 0), barWidth);
         g.setColor(Color.BLACK);
         g.fillRect(barX, barY, barWidth, barHeight);
-
         // Calculate cooldown progress
-        
-
         g.setColor(Color.CYAN);
         g.fillRect(WeaponX - cameraX, WeaponY - cameraY, fillWidth, barHeight);
     }

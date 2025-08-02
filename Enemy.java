@@ -11,11 +11,14 @@ public class Enemy {
     private long patrolChangedDirection = 0;
     Random rand = new Random();
     int[] patrol = new int[]{rand.nextInt(3) - 1,rand.nextInt(3) - 1};
+    List<Items> items;
     boolean dead = false;
     public Rectangle LastAttack = new Rectangle();
     public Enemy (int x, int y, int size){
         this.x = x;
         this.y = y;
+        this.items = new java.util.ArrayList<>();
+        this.items.add(new Sword());
         this.size = size;
     }
     public void Attack(Player player){

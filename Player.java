@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 
 public class Player {
     List<Items> items = new ArrayList<>();
+    long now = System.currentTimeMillis();
+    boolean GameOver = false; // Assuming this is a static variable in the game class
     private Image sprite;
     int currentWeaponIndex = 1;
     int x,y;
@@ -18,7 +20,8 @@ public class Player {
     public Player(int x, int y) {
         items.add(new Sword()); 
         items.add(new Gun());
-        items.add(new Potions(this));
+        items.add(new Potions(this, 0));
+        items.add(new Potions(this, 1));
         this.x = x;
         this.y = y;
         sprite = new ImageIcon("assets/player.png").getImage();
@@ -34,8 +37,26 @@ public class Player {
         //dung vu khi:p 
         items.get(currentWeaponIndex).use(x, y, enemies,bullets, direction);        
     }
-
+    public void update(int playerDx, int playerDy,List<Obstacle> obstacles,List<Enemy> enemies){
+        now = System.currentTimeMillis();
+        move(playerDx, playerDy, obstacles, enemies);
+        if(health <= 0){
+            die();
+        }
+        for (Items item : items) {
+            if (item instanceof Potions) {
+                ((Potions)item).update();
+            }
+        }
+    }
+    public void die(){
+        GameOver = true;
+    }
     public void draw(Graphics g, int cameraX, int cameraY, int ScreenWidth, int ScreenHeight) {
+        if (GameOver){
+            g.setFont(new Font("Arial", Font.BOLD, 48));
+            g.drawString("Game Over", ScreenWidth / 2 - 140, ScreenHeight / 2);
+        }
         g.setColor(Color.GREEN);
         g.fillOval(x - cameraX, y - cameraY, size, size);
         //g.drawImage(sprite, x-cameraX, y-cameraY,size,size, null);
@@ -74,6 +95,5 @@ public class Player {
     }
     public Rectangle getBounds(){
         return new Rectangle((int)(x + size*0.1),(int)(y + size*0.1),(int)(size - size*0.2),(int)(size - size*0.2));
-
     }
 }
