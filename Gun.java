@@ -2,7 +2,7 @@ import java.util.List;
 import java.awt.*;
 
 public class Gun implements Items{
-    private int LastAttackTime = 0;
+    private long LastAttackTime = 0;
     private int dmg = 10;
     private int range = 100;
     private int speed = 10;
@@ -15,7 +15,7 @@ public class Gun implements Items{
         return "Gun";
     }
     public void use(int x, int y, List<Enemy> enemy,List<Bullet> bullets, double[] direction) {
-        int now = (int)System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         if (now - LastAttackTime < AttackCooldown) {
             return;
         }
@@ -43,7 +43,7 @@ public class Gun implements Items{
         g.fillRect(barX, barY, barWidth, barHeight);
 
         // Calculate cooldown progress
-        int elapsed = now - LastAttackTime;
+        int elapsed = (int)(now - LastAttackTime);
         int fillWidth = Math.min(Math.max(elapsed / 10, 0), barWidth);
         g.setColor(Color.CYAN);
         g.fillRect(WeaponX - cameraX, WeaponY - cameraY, fillWidth, barHeight);

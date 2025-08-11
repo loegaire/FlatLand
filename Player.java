@@ -9,7 +9,7 @@ public class Player {
     long now = System.currentTimeMillis();
     boolean GameOver = false; // Assuming this is a static variable in the game class
     private Image sprite;
-    int currentWeaponIndex = 1;
+    int currentWeaponIndex = 0;
     int x,y;
     int speed = 2;
     int size = 30;
@@ -89,7 +89,8 @@ public class Player {
     public void changeWeapon(int notches){
         if(notches > 0) {
             currentWeaponIndex = (currentWeaponIndex + 1) % items.size();
-        } else if (notches < 0) {
+        } 
+        else if (notches < 0) {
             currentWeaponIndex = (currentWeaponIndex - 1 + items.size()) % items.size();
         }
     }
