@@ -14,6 +14,9 @@ public class Gun implements Items{
     public String getName() {
         return "Gun";
     }
+    public long lastAttackTime() {
+        return LastAttackTime;
+    }
     public void use(int x, int y, List<Enemy> enemy,List<Bullet> bullets, double[] direction) {
         long now = System.currentTimeMillis();
         if (now - LastAttackTime < AttackCooldown) {
